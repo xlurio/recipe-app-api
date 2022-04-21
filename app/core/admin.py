@@ -1,4 +1,5 @@
 from django.contrib import admin
+from recipe.models import Tag
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User
 from .forms import UserChangeForm, UserCreationForm
@@ -13,8 +14,8 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be user in displaying the User model. These override the
     # definitions on the base UserAdmin that reference specific fields on
     # auth.User.
-    list_display = ('email', 'name', 'is_staff')
-    list_filter = ('is_staff')
+    list_display = ('email', 'name', 'is_staff',)
+    list_filter = ('is_staff',)
     fieldsets = (
         (None, {'fields': ('email', 'password',)}),
         ('Personal info', {'fields': ('name',)}),
@@ -35,3 +36,4 @@ class UserAdmin(BaseUserAdmin):
 
 # Admin registers
 admin.site.register(User, UserAdmin)
+admin.site.register(Tag)

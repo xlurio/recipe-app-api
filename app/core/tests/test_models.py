@@ -1,5 +1,17 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from recipe.models import Tag
+from django.test import TestCase
+
+
+def sample_user():
+    email = 'kagaro@nakama.com'
+    name = 'Kagaro Nakama'
+    password = 'senhadokagaro123'
+    return get_user_model().objects.create_user(
+        email=email,
+        name=name,
+        password=password
+    )
 
 
 # Write your tests here
@@ -41,3 +53,11 @@ class ModelTests(TestCase):
         )
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+
+    def test_create_tag(self):
+        '''Test recipe tag creation'''
+        tag = Tag.objects.create(
+            user=sample_user(),
+            name='Italian'
+        )
+        self.assertEqual(str(tag), tag.name)

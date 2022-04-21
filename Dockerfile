@@ -1,7 +1,8 @@
 FROM python:3.9.12-alpine3.15
 MAINTAINER Lucas Matheus Correa Calegario
 
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 RUN apk add --update --no-cache postgresql-client
 RUN apk add --update --no-cache --virtual .tmp-build-deps \
