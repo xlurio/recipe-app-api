@@ -1,7 +1,6 @@
 from django.contrib import admin
-from recipe.models import Tag
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User
+from .models import User, Tag
 from .forms import UserChangeForm, UserCreationForm
 
 
