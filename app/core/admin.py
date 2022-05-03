@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, Tag
+from .models import Ingredient, Recipe, Tag, User
 from .forms import UserChangeForm, UserCreationForm
 
 
 # UserAdmin
 class UserAdmin(BaseUserAdmin):
-    # The forms to add and change user instances
+    '''The forms to add and change user instances'''
     form = UserChangeForm
     add_form = UserCreationForm
 
@@ -36,3 +36,5 @@ class UserAdmin(BaseUserAdmin):
 # Admin registers
 admin.site.register(User, UserAdmin)
 admin.site.register(Tag)
+admin.site.register(Ingredient)
+admin.site.register(Recipe)

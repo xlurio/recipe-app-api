@@ -9,7 +9,7 @@ from django.conf import settings
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **kwargs):
-        # Method that creates and returns a new user
+        '''Method that creates and returns a new user'''
         if not email:
             raise ValueError('An email must be set')
         user = self.model(
@@ -21,7 +21,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password, **kwargs):
-        # Method that creates and returns a new superuser
+        '''Method that creates and returns a new superuser'''
         user = self.create_user(
             email=email,
             password=password
@@ -33,6 +33,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    ''' User model'''
     email = models.EmailField(max_length=254, unique=True)
     name = models.CharField(max_length=254)
     is_staff = models.BooleanField(default=False)
