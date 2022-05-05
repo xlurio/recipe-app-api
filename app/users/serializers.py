@@ -5,15 +5,14 @@ from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
+        write_only=True,
+        min_length=5,
         style={'input_type': 'password'}
     )
 
     class Meta:
         model = get_user_model()
         fields = ('email', 'password', 'name')
-        extra_kwargs = {
-            'password': {'write_only': True, 'min_length': 5}
-        }
 
     def create(self, validated_data):
         '''Creates and returns a new user'''
