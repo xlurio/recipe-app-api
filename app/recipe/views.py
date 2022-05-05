@@ -1,9 +1,12 @@
-from rest_framework import mixins, viewsets
+from rest_framework.decorators import action
+from rest_framework import mixins, status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from core.models import Ingredient, Recipe, Tag
 from .serializers import (
-    DetailSerializer, IngredientSerializer, RecipeSerializer, TagSerializer
+    DetailSerializer, ImageSerializer, IngredientSerializer, RecipeSerializer,
+    TagSerializer
 )
+from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 
 
@@ -49,8 +52,31 @@ class RecipeViewSet(viewsets.ModelViewSet):
         '''Return appropriated serializer class'''
         if self.action == 'retrieve':
             return DetailSerializer
+        if self.action == 'upload_image':
+            return ImageSerializer
         return self.serializer_class
 
     def perform_create(self, serializer):
         '''Create recipe'''
         serializer.save(user=self.request.user)
+
+    @action(detail=True, methods=['post'], url_path='upload-image')
+    def upload_image(self, request, pk=None):
+        '''Upload image to API'''
+        recipe = self.get_object()
+        serializer = self.get_serializer(
+            recipe,
+            data=request.data
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )

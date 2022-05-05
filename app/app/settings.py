@@ -14,9 +14,15 @@ import os
 
 from pathlib import Path
 
+
+def get_static_dir(initial_dir, final_dir):
+    static_dir = os.path.join(initial_dir, 'vol')
+    static_dir = os.path.join(static_dir, 'web')
+    return os.path.join(static_dir, final_dir)
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -138,6 +144,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+STATIC_ROOT = get_static_dir(BASE_DIR, 'static')
+MEDIA_ROOT = get_static_dir(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
